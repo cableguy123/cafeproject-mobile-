@@ -9,39 +9,61 @@ class settingDetails extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("정렬",style: TextStyle(color: Projectcolors.settingTitleColor)),
+          title: const Text("設定",style: TextStyle(color: Projectcolors.settingTitleColor)),
+          shape: Border(
+            bottom: BorderSide(
+              color: Projectcolors.settingBottomLineColor,
+              width: 0.95,
+            ),
+          ),
         ),
         body: Container(
-          margin: EdgeInsets.all(20),
+          margin: EdgeInsets.all(0),
           color: Projectcolors.settingOptionColor,
+          width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "1.사용방법",
-                style: TextStyle(fontSize: 20,color: Projectcolors.settingTitleColor),
-              ),
               Container(
-                color: Colors.blue,
-                margin: EdgeInsets.only(top: 20),
-                child: ListView.builder(
-                  itemCount: settingList.length,
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      margin: EdgeInsets.only(top: 20),
-                      color: Colors.yellow,
-                      width: 300,
-                      height: 75,
-                      child: Row(
-                        children: [
-
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                width: double.infinity,
+                padding: const EdgeInsets.only(top: 15,left: 14,bottom: 15),
+                child: Text('アプリについて',style: TextStyle(color: Projectcolors.settingTitleColor.withOpacity(0.5),fontSize: 10)),
               ),
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  child: ListView.builder(
+                    itemCount: settingList.length,
+                    itemBuilder: (BuildContext context,int index) {
+                      return ElevatedButton(
+                        onPressed: () {
+
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                '이용가이드',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_right,
+                                color: Colors.green,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              )
             ],
           ),
         ),
