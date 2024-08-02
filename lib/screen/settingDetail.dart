@@ -9,6 +9,14 @@ class settingDetails extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          centerTitle: false,
+          titleSpacing: 2.5,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_left),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           title: const Text("設定",style: TextStyle(color: Projectcolors.settingTitleColor)),
           shape: Border(
             bottom: BorderSide(
@@ -32,34 +40,42 @@ class settingDetails extends StatelessWidget {
               Expanded(
                 child: Container(
                   width: double.infinity,
-                  child: ListView.builder(
+                  child: ListView.separated(
                     itemCount: settingList.length,
                     itemBuilder: (BuildContext context,int index) {
                       return ElevatedButton(
                         onPressed: () {
 
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.all(10),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              Text(
-                                '이용가이드',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                                Text(
+                                  settingList[index],
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              ),
-                              Icon(
-                                Icons.arrow_right,
-                                color: Colors.green,
-                              ),
+                                Icon(
+                                  Icons.arrow_right,
+                                  size: 30,
+                                ),
                             ],
                           ),
                         ),
                       );
+                    },
+                    separatorBuilder: (context,index) {
+                      return Divider(height: 0.5);
                     },
                   ),
                 ),
