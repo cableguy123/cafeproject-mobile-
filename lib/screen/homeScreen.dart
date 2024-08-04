@@ -1,5 +1,4 @@
-import 'package:cafeproject/screen/payScreen.dart';
-import 'package:cafeproject/screen/settingDetail.dart';
+import 'package:cafeproject/screen/settingScreen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,6 +15,10 @@ class _HomeScreenState extends State<HomeScreen> {
       home: Scaffold(
         appBar: HomeAppBar(),
       ),
+      initialRoute: '/',
+      routes: {
+        '/setting': (context) => SettingScreen(),
+      },
     );
   }
 }
@@ -24,9 +27,30 @@ class _HomeScreenState extends State<HomeScreen> {
 // TODO This is AppBar
 class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
   const HomeAppBar({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: Builder(
+        builder: (BuildContext context) {
+          return IconWidgetButton(iconsValue: Icons.account_circle,tooltipValue: 'account',iconPressed: _navigateToSettings);
+        },
+      ),
+      actions: <Widget>[
+        IconWidgetButton(iconsValue: Icons.alarm, tooltipValue: 'alarm', iconPressed: _navigateToSettings),
+        IconWidgetButton(iconsValue: Icons.settings, tooltipValue: 'settings', iconPressed: _navigateToSettings),
+      ],
+    );
+  }
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  // TODO: NavigatorPush
+  void _navigateToSettings(BuildContext context) {
+    Navigator.of(context).push(_createRoute());
+  }
+  // TODO: PageMoveAnimation
   Route _createRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => const settingDetails(),
+      pageBuilder: (context, animation, secondaryAnimation) => const SettingScreen(),
       transitionsBuilder: (context,animation,secondaryAnimation,child) {
         const begin = Offset(1.0,0.0);
         const end = Offset.zero;
@@ -39,43 +63,24 @@ class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
       },
     );
   }
+}
+class IconWidgetButton extends StatelessWidget {
+  final IconData iconsValue;
+  final String tooltipValue;
+  final void Function(BuildContext) iconPressed;
+  const IconWidgetButton({
+    super.key,required this.iconsValue,required this.tooltipValue,required this.iconPressed
+  });
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      leading: Builder(
-        builder: (BuildContext context) {
-          return IconButton(
-            icon: const Icon(Icons.account_circle),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-          );
-        },
-      ),
-      actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.alarm),
-          tooltip: 'alarm',
-          onPressed: () {
-
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.settings),
-          tooltip: 'settings',
-          onPressed: () {
-              Navigator.of(context).push(
-                  _createRoute()
-              );
-          }
-        )
-      ],
+    return IconButton(
+      icon: Icon(iconsValue),
+      tooltip: tooltipValue,
+      onPressed: () => iconPressed(context),
     );
   }
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-
 }
+
+
 
 
