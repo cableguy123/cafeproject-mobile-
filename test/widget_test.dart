@@ -5,82 +5,33 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:cafeproject/screen/settingScreen.dart';
+import 'dart:ffi';
+
+import 'package:cafeproject/screen/settingscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-void testDynamic() {
-  dynamic value = 'Hello, World!';
-  print('Initial dynamic value: $value');
 
-  value = 42;
-  print('Updated dynamic value: $value');
-
-  value = true;
-  print('Updated dynamic value: $value');
-}
-
-void testSymbol() {
-  Symbol symbol1 = #exampleSymbol;
-  Symbol symbol2 = Symbol('exampleSymbol');
-
-  print('Symbol1: $symbol1');
-  print('Symbol2: $symbol2');
-}
-
-void testRunes() {
-  Runes input = Runes('Hello, \u2665');
-  String output = String.fromCharCodes(input);
-
-  print('Runes: $input');
-  print('String from Runes: $output');
-}
-
-void testFunction() {
-  int multiplyByTwo(int x) => x * 2;
-  int add(int x, int y) => x + y;
-
-  Function function1 = multiplyByTwo;
-  Function function2 = add;
-
-  print('Function1 result: ${function1(5)}');
-  print('Function2 result: ${function2(5, 3)}');
-}
-
-void testFuture() {
-  Future<int> delayedResult() async {
-    await Future.delayed(Duration(seconds: 2));
-    return 42;
+void message(DateTime currentTime) {
+  final now = currentTime.hour;
+  final minutes = currentTime.minute;
+  print("시간 :  ${now}");
+  print("분 :  ${minutes} ");
+  if (now >= 6 && now < 12) {
+    print("おはようございます");
+  } else if ((now == 12 && minutes >= 1) || (now > 12 && now < 18)) {
+    print("こんにちは");
+  } else {
+    print("こんばんは");
   }
-
-  delayedResult().then((value) {
-    print('Future result: $value');
-  });
-
-  print('Waiting for future...');
 }
 
-void testStream() {
-  Stream<int> countStream(int max) async* {
-    for (int i = 0; i < max; i++) {
-      await Future.delayed(Duration(seconds: 1));
-      yield i;
-    }
-  }
-
-  Stream<int> stream = countStream(5);
-
-  stream.listen((value) {
-    print('Stream value: $value');
-  });
-
-  print('Waiting for stream...');
-}
 void main() {
-  testDynamic();
-  testSymbol();
-  testRunes();
-  testFunction();
-  testFuture();
-  testStream();
+  // 원하는 시간 설정 (예: 12시 1분)
+  DateTime testTime = DateTime(2024, 8, 5, 17, 1);
+  message(testTime);
+
+  // // 다른 시간 설정 (예: 18시 30분)
+  // DateTime anotherTestTime = DateTime(2024, 8, 5, 18, 30);
+  // message(anotherTestTime);
 }

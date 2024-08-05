@@ -1,4 +1,4 @@
-import 'package:cafeproject/screen/settingScreen.dart';
+import 'package:cafeproject/screen/settingscreen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +14,8 @@ class _HomeScreenState extends State<HomeScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: HomeAppBar(),
+        body: HomeContainer(),
+        bottomNavigationBar: ,
       ),
       initialRoute: '/',
       routes: {
@@ -36,7 +38,7 @@ class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
         },
       ),
       actions: <Widget>[
-        IconWidgetButton(iconsValue: Icons.alarm, tooltipValue: 'alarm', iconPressed: _navigateToSettings),
+        IconWidgetButton(iconsValue: Icons.notifications, tooltipValue: 'alarm', iconPressed: _navigateToSettings),
         IconWidgetButton(iconsValue: Icons.settings, tooltipValue: 'settings', iconPressed: _navigateToSettings),
       ],
     );
@@ -80,7 +82,51 @@ class IconWidgetButton extends StatelessWidget {
     );
   }
 }
+class HomeContainer extends StatefulWidget {
+  const HomeContainer({super.key});
+  @override
+  State<HomeContainer> createState() => _HomeContainerState();
+}
+
+class _HomeContainerState extends State<HomeContainer> {
+  DateTime nowTime = DateTime.now();
+  final String newItem = "今週の新商品";
+  @override
+  Widget build(BuildContext context) {
+    // return Padding(
+    //   padding: EdgeInsets.all(20),
+    //   child: Column(
+    //     mainAxisAlignment: MainAxisAlignment,
+    //   ),
+    // );
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(message(nowTime),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+            SizedBox(height: 10),
+            Text(newItem),
+            Divider(height: 10),
+          ],
+        ),
+      ),
+    );
+  }
+  String message(DateTime currentTime) {
+    final now = currentTime.hour;
+    final minutes = currentTime.minute;
+    if (now >= 6 && now < 12) {
+      return("おはようございます");
+    } else if ((now == 12 && minutes >= 1) || (now > 12 && now < 18)) {
+      return("こんにちは");
+    } else {
+      return("こんばんは");
+    }
+  }
+}
 
 
-
+// Text(message(nowTime),style: const TextStyle(fontSize: 22,color: Colors.black,fontWeight: FontWeight.bold))
 

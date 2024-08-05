@@ -1,5 +1,5 @@
-import 'package:cafeproject/screen/homeScreen.dart';
-import 'package:cafeproject/screen/settingScreen.dart';
+import 'package:cafeproject/screen/homescreen.dart';
+import 'package:cafeproject/screen/settingscreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
