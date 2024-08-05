@@ -1,4 +1,4 @@
-import 'package:cafeproject/Data/SettingModel.dart';
+import 'package:cafeproject/model/setting_model.dart';
 import 'package:cafeproject/design/fontColors/ProjectColors.dart';
 import 'package:flutter/material.dart';
 class SettingScreen extends StatelessWidget {
