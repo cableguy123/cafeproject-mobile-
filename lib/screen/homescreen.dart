@@ -1,4 +1,5 @@
 import 'package:cafeproject/screen/settingscreen.dart';
+import 'package:cafeproject/screen/splashscreenstate.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,7 +16,6 @@ class _HomeScreenState extends State<HomeScreen> {
       home: Scaffold(
         appBar: HomeAppBar(),
         body: HomeContainer(),
-        bottomNavigationBar: ,
       ),
       initialRoute: '/',
       routes: {
