@@ -24,7 +24,7 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 
 flutter_native_splash:
-  color: '#9c7c6c'
+  color: '#FFFFFF'
   image: 'assets/picture.png'
   android_12:
     image: 'assets/picture.png'

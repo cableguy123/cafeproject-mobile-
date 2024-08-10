@@ -1,5 +1,4 @@
 import 'package:cafeproject/screen/settingscreen.dart';
-import 'package:cafeproject/screen/splashscreenstate.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
