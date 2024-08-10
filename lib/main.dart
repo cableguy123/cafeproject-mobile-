@@ -1,7 +1,18 @@
-import 'package:cafeproject/screen/homescreen.dart';
-import 'package:cafeproject/screen/settingscreen.dart';
+import 'package:cafeproject/screen/splashscreenstate.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(HomeScreen());
+  runApp(const MainApp());
+}
+
+class MainApp extends StatelessWidget{
+  const MainApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return const MaterialApp(
+      home: SplashScreen(),
+    );
+  }
 }

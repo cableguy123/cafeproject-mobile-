@@ -15,7 +15,6 @@ class _HomeScreenState extends State<HomeScreen> {
       home: Scaffold(
         appBar: HomeAppBar(),
         body: HomeContainer(),
-        bottomNavigationBar: ,
       ),
       initialRoute: '/',
       routes: {
