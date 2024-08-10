@@ -10,16 +10,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         appBar: HomeAppBar(),
         body: HomeContainer(),
-      ),
-      initialRoute: '/',
-      routes: {
-        '/setting': (context) => SettingScreen(),
-      },
     );
   }
 }
@@ -86,18 +79,11 @@ class HomeContainer extends StatefulWidget {
   @override
   State<HomeContainer> createState() => _HomeContainerState();
 }
-
 class _HomeContainerState extends State<HomeContainer> {
   DateTime nowTime = DateTime.now();
   final String newItem = "今週の新商品";
   @override
   Widget build(BuildContext context) {
-    // return Padding(
-    //   padding: EdgeInsets.all(20),
-    //   child: Column(
-    //     mainAxisAlignment: MainAxisAlignment,
-    //   ),
-    // );
     return Container(
       child: Padding(
         padding: EdgeInsets.all(10),
@@ -127,5 +113,5 @@ class _HomeContainerState extends State<HomeContainer> {
 }
 
 
-// Text(message(nowTime),style: const TextStyle(fontSize: 22,color: Colors.black,fontWeight: FontWeight.bold))
+
 
