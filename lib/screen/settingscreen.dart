@@ -38,10 +38,10 @@ class BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
         centerTitle: false,
         titleSpacing: 2.5,
         leading: SettingIconButton(settingIcons: Icons.arrow_left, settingTooltipValue: 'before', settingIconPressed: _navigateToHome),
-        title: const Text("設定",style: TextStyle(color: Projectcolors.settingTitleColor)),
+        title: const Text("設定",style: TextStyle(color: Projectcolors.kPrimaryBlackColor)),
         shape: const Border(
           bottom: BorderSide(
-            color: Projectcolors.settingBottomLineColor,
+            color: Projectcolors.kPrimaryGrayColor,
             width: 0.95,
           ),
         ),
@@ -59,7 +59,7 @@ class BuildContainer extends StatelessWidget {
   Widget build(BuildContext context) {
       return Container(
         margin: const EdgeInsets.all(0),
-        color: Projectcolors.settingOptionColor,
+        color: Projectcolors.kPrimaryGrayColor,
         width: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +67,7 @@ class BuildContainer extends StatelessWidget {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.only(top: 15,left: 14,bottom: 15),
-              child: Text('アプリについて',style: TextStyle(color: Projectcolors.settingTitleColor.withOpacity(0.5),fontSize: 10)),
+              child: Text('アプリについて',style: TextStyle(color: Projectcolors.kPrimaryWhiteColor.withOpacity(0.5),fontSize: 10)),
             ),
             Expanded(
               child: SizedBox(
