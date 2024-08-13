@@ -1,8 +1,9 @@
-import 'package:cafeproject/design/fontColors/ProjectColors.dart';
-import 'package:cafeproject/model/bottom_navigation_bar.dart';
 import 'package:cafeproject/screen/payscreen.dart';
 import 'package:cafeproject/screen/settingscreen.dart';
 import 'package:flutter/material.dart';
+
+import '../design/fontColors/ProjectColors.dart';
+import '../model/bottom_navigation_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,15 +11,19 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: HomeAppBar(),
+    super.build(context);
+    return Scaffold(
+      appBar: const HomeAppBar(),
       body: HomeContainer(),
-      bottomNavigationBar: HomeBottomBarWidget(),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 
@@ -62,22 +67,6 @@ class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
     );
   }
 }
-class IconWidgetButton extends StatelessWidget {
-  final IconData iconsValue;
-  final String tooltipValue;
-  final void Function(BuildContext) iconPressed;
-  const IconWidgetButton({
-    super.key,required this.iconsValue,required this.tooltipValue,required this.iconPressed
-  });
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(iconsValue),
-      tooltip: tooltipValue,
-      onPressed: () => iconPressed(context),
-    );
-  }
-}
 class HomeContainer extends StatefulWidget {
   const HomeContainer({super.key});
   @override
@@ -98,6 +87,7 @@ class _HomeContainerState extends State<HomeContainer> {
             SizedBox(height: 10),
             Text(newItem),
             Divider(height: 10),
+
           ],
         ),
       ),
@@ -115,57 +105,23 @@ class _HomeContainerState extends State<HomeContainer> {
     }
   }
 }
-class HomeBottomBarWidget extends StatefulWidget {
-  const HomeBottomBarWidget({super.key});
-  @override
-  State<HomeBottomBarWidget> createState() => _HomeBottomBarWidgetState();
-}
-class _HomeBottomBarWidgetState extends State<HomeBottomBarWidget> {
-  // ページ移動時インデックス
-  int _currentIndex = 0;
-  // ページ移動するスクリーン
-  final List<Widget> pageWidgets = [
-    const HomeContainer(),
-    const PayScreen(),
-  ];
+
+
+
+
+class IconWidgetButton extends StatelessWidget {
+  final IconData iconsValue;
+  final String tooltipValue;
+  final void Function(BuildContext) iconPressed;
+  const IconWidgetButton({
+    super.key,required this.iconsValue,required this.tooltipValue,required this.iconPressed
+  });
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      items: bottomNavigationItemFunc(),
-      currentIndex: _currentIndex,
-      onTap: _onItemTapped,
-      // アニメーション効果 false
-      type: BottomNavigationBarType.fixed,
-      selectedItemColor: Projectcolors.kPrimaryGreenColor,
-      unselectedItemColor: Projectcolors.kPrimaryBlackColor,
-      selectedLabelStyle: labelTextSize(),
-      unselectedLabelStyle: labelTextSize(),
+    return IconButton(
+      icon: Icon(iconsValue),
+      tooltip: tooltipValue,
+      onPressed: () => iconPressed(context),
     );
   }
-  void _onItemTapped(int index) => setState(() {
-    _currentIndex = index;
-  });
-  List<BottomNavigationBarItem> bottomNavigationItemFunc() {
-    const List<BottomNavigationBarItemData> bottomBarItems = [
-      BottomNavigationBarItemData(iconData: Icons.home, label: 'Home'),
-      BottomNavigationBarItemData(iconData: Icons.qr_code, label: 'Pay'),
-      BottomNavigationBarItemData(iconData: Icons.store, label: 'Store'),
-      BottomNavigationBarItemData(iconData: Icons.access_time_filled, label: 'Order'),
-      BottomNavigationBarItemData(iconData: Icons.account_circle, label: 'Account'),
-    ];
-    return bottomBarItems.map((item) {
-      return BottomNavigationBarItem(
-          icon: Icon(item.iconData),
-          label: item.label
-      );
-    }).toList();
-  }
-  TextStyle labelTextSize() {
-    return const TextStyle(fontSize: 12);
-  }
 }
-
-
-
-
-
