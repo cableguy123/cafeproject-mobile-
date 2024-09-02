@@ -65,6 +65,7 @@ class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
     );
   }
 }
+
 class HomeContainer extends StatefulWidget {
   const HomeContainer({super.key});
   @override
