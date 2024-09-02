@@ -1,4 +1,3 @@
-import 'package:cafeproject/model/setting_model.dart';
 import 'package:cafeproject/design/fontColors/ProjectColors.dart';
 import 'package:flutter/material.dart';
 class SettingScreen extends StatelessWidget {
@@ -11,25 +10,7 @@ class SettingScreen extends StatelessWidget {
       );
   }
 }
-class SettingIconButton extends StatelessWidget {
-  final IconData settingIcons;
-  final String settingTooltipValue;
-  final void Function(BuildContext) settingIconPressed;
-  const SettingIconButton({
-    super.key,
-    required this.settingIcons,
-    required this.settingTooltipValue,
-    required this.settingIconPressed
-  });
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(settingIcons),
-      tooltip: settingTooltipValue,
-      onPressed: () => settingIconPressed(context),
-    );
-  }
-}
+
 class BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
   const BuildAppBar({super.key});
   @override
@@ -54,6 +35,13 @@ class BuildAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize=> const Size.fromHeight(kToolbarHeight);
 }
 class BuildContainer extends StatelessWidget {
+  static const settingList = [
+    "利用ガイド",
+    "ヘルプ",
+    "利用規約",
+    "プライバシーポリシー",
+    "ライセンス"
+  ];
   const BuildContainer({super.key});
   @override
   Widget build(BuildContext context) {
@@ -67,7 +55,7 @@ class BuildContainer extends StatelessWidget {
             Container(
               width: double.infinity,
               padding: const EdgeInsets.only(top: 15,left: 14,bottom: 15),
-              child: Text('アプリについて',style: TextStyle(color: Projectcolors.kPrimaryWhiteColor.withOpacity(0.5),fontSize: 10)),
+              child: const Text('アプリについて',style: TextStyle(color: Projectcolors.kPrimaryBlackColor,fontSize: 10)),
             ),
             Expanded(
               child: SizedBox(
@@ -116,4 +104,23 @@ class BuildContainer extends StatelessWidget {
         ),
       );
     }
+}
+class SettingIconButton extends StatelessWidget {
+  final IconData settingIcons;
+  final String settingTooltipValue;
+  final void Function(BuildContext) settingIconPressed;
+  const SettingIconButton({
+    super.key,
+    required this.settingIcons,
+    required this.settingTooltipValue,
+    required this.settingIconPressed
+  });
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(settingIcons),
+      tooltip: settingTooltipValue,
+      onPressed: () => settingIconPressed(context),
+    );
+  }
 }
