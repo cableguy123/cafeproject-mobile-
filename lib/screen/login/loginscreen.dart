@@ -1,4 +1,5 @@
 import 'package:cafeproject/api/post.dart';
+import 'package:cafeproject/model/db_model/user.dart';
 import 'package:cafeproject/screen/signup/createuser.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -28,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     if(response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Login Successfully")));
+      final Map<String,dynamic> responseData = jsonDecode(response.body);
+      print('response data =  $responseData');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Login is Failed")));
     }

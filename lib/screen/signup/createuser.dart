@@ -1,6 +1,8 @@
 import 'package:cafeproject/api/post.dart';
+import 'package:cafeproject/model/db_model/user.dart';
 import 'package:cafeproject/screen/homescreen.dart';
 import 'package:cafeproject/screen/login/loginscreen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -15,9 +17,8 @@ class _createUserState extends State<createUserScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   Future<void> _createUser() async {
-    // final url = Uri.parse("http://10.0.2.2:3000/signup");
-    final url = Uri.parse("${API.URL}/signup");
-    final response = await http.post(
+    final url = Uri.parse("http://10.0.2.2:3000/createUser");
+    final request = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
@@ -26,14 +27,18 @@ class _createUserState extends State<createUserScreen> {
         'password': _passwordController.text,
       }),
     );
+    if (request.statusCode == 200) {
+      Map<String,dynamic> responseData = jsonDecode(request.body);
+      if (kDebugMode) {
+        print("$responseData");
+      }
 
-    if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Sign up successful')),
+        const SnackBar(content: Text('USER create successful')),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to sign up')),
+        const SnackBar(content: Text('Failed to create user')),
       );
     }
   }
