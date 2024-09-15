@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../design/fontColors/ProjectColors.dart';
-import '../../model/bottom_navigation_bar.dart';
 
 
 class MyApp extends StatelessWidget {
@@ -80,4 +79,14 @@ class _HomeBottomBarWidgetState extends State<HomeBottomBarWidget> {
     );
   }
 
+}
+
+class BottomNavigationBarItemData extends StatelessWidget {
+  final IconData iconData;
+  final String label;
+  const BottomNavigationBarItemData({super.key,required this.iconData,required this.label});
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }
