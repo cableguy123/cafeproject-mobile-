@@ -72,7 +72,7 @@ class HomeContainer extends StatefulWidget {
 }
 class _HomeContainerState extends State<HomeContainer> {
   DateTime nowTime = DateTime.now();
-  final String newItem = "今週の新商品";
+  final String newItem = "今週안녕新商品";
   final String saleItem = "今週割引商品";
   String message(DateTime currentTime) {
     final now = currentTime.hour;
