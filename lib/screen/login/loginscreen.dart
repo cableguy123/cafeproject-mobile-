@@ -1,6 +1,7 @@
 import 'package:cafeproject/api/post.dart';
 import 'package:cafeproject/model/db_model/user.dart';
 import 'package:cafeproject/screen/signup/createuser.dart';
+import 'package:cafeproject/screen/verify/verifylogic.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,7 +12,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with verifyemailPassword {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   Future<void> _login() async {
@@ -43,7 +44,17 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextFieldWidget(textEditingController: emailController, labelText: 'メール', paddingValue: 30.0),
+            TextFieldWidget(textEditingController: emailController,labelText: 'メール', paddingValue: 30.0,focusNode: emailFocus,validator: (value) {
+              int res = validateEmail(value);
+              if (res == 1) {
+                return "Please fill email address";
+              } else if(res == 2) {
+                return "Please enter valid email address";
+              } else {
+                return null;
+              }
+            },
+            ),
             PassWordFieldWidget(textEditingController: passwordController, labelText: 'パスワード', paddingValue: 30.0),
             const SizedBox(height: 20),
             ElevatedButton(
