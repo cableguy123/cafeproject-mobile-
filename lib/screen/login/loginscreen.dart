@@ -3,6 +3,7 @@ import 'package:cafeproject/model/db_model/user.dart';
 import 'package:cafeproject/screen/signup/createuser.dart';
 import 'package:cafeproject/screen/verify/verifylogic.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -15,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> with verifyemailPassword {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final storage = const FlutterSecureStorage();
   Future<void> _login() async {
     final url = Uri.parse("${API.URL}/login");
     final response = await http.post(
@@ -29,9 +31,10 @@ class _LoginScreenState extends State<LoginScreen> with verifyemailPassword {
       return;
     }
     if(response.statusCode == 200) {
+      final Map<String,dynamic> responseData = json.decode(response.body);
+      print("responseData :  $responseData");
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Login Successfully")));
-      final Map<String,dynamic> responseData = jsonDecode(response.body);
-      print('response data =  $responseData');
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Login is Failed")));
     }
