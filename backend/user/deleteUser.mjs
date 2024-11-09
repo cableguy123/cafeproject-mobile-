@@ -8,8 +8,8 @@ const db = new sqlite3.Database('/Users/sawauchiryouta/cafe-project-mobile-db/ca
 export function getIdbyEmailandPassword(req) {
     return new Promise((resolve, reject) => {
         const { email, password } = req.body;
-        console.log(email);
-        console.log(password)
+        // console.log(email);
+        // console.log(password)
         db.get("SELECT id,name FROM USERS WHERE email = ? AND password = ? ", [email, password], (err, row) => {
             if (err) {
                 console.error(err.message);
