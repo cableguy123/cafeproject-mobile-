@@ -33,6 +33,7 @@ migrate_working_dir/
 
 # backend/ related
 node_modules
+.env
 
 # Symbolication related
 app.*.symbols

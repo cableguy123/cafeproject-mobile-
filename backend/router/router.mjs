@@ -1,23 +1,25 @@
 import express from 'express';
 import { createUser } from '../user/createUser.mjs'; // Import ESM module
-import { selectUser } from '../user/signup.mjs';
-import { getIdbyEmailandPassword ,deleteUser} from '../user/deleteUser.mjs';
+import { getUser } from '../user/signIn.mjs';
+import { getIdbyEmailandPassword, deleteUser } from '../user/deleteUser.mjs';
+import { checkAuth } from '../middleware/checkAuth.mjs';
+
 
 const router = express.Router();
 
-router.post('/createUser', function (req, res) {
-    if (req.body.name && req.body.email && req.body.password) {
+router.post('/signUp', function (req, res) {
+    if (req.body.user_id && req.body.name && req.body.email && req.body.password) {
         createUser(req, res);
     } else {
         res.status(404).send('Not Add User');
     }
 });
 
-router.post('/signup', function (req, res) {
+router.post('/signIn', checkAuth, function (req, res) {
     if (req.body.email && req.body.password) {
-        selectUser(req, res);
+        getUser(req, res);
     } else {
-        res.status(404).send('Not SELECT USER');
+        res.status(404).send('ログインに失敗しました。e-mailまたはパスワードが違う可能性があります');
     }
 })
 

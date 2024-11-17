@@ -1,7 +1,7 @@
 import sqlite3 from 'sqlite3';
 
 
-const db = new sqlite3.Database('/Users/sawauchiryouta/cafe-project-mobile-db/cafe-project-mobile-db.db');
+const db = new sqlite3.Database('/Users/sawauchiryouta/cafe-project-mobile-db/test.db');
 
 
 
