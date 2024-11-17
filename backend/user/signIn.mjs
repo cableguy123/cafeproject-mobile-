@@ -8,11 +8,13 @@ const db = new sqlite3.Database(`/Users/${process.env.USERNAME}/cafe-project-mob
 const pbkdf2Promis = util.promisify(crypto.pbkdf2);
 
 export function getUser(req, res) {
-    const { email, password } = req.body;
+    const { user_id, email, password } = req.body;
+
+    // console.log(`getUserの${user_id}`);
     // console.log(`getUserの${email}`);
     // console.log(`getUserの${password}`);
 
-    db.get('SELECT user_id,name,salt,password FROM users WHERE email = ?', [email], async (err, row) => {
+    db.get('SELECT user_id,name,salt,password FROM users WHERE user_id = ? and email = ? ', [user_id, email], async (err, row) => {
         if (!row) {
             // console.log(row);
             res.status(500).send('selectの結果を確認してください');
@@ -36,10 +38,10 @@ export function getUser(req, res) {
             } else {
                 res.status(200).json(
                     {
-                        // row.name
+
+                        msg: "success login user",
                         autheticated_user: row.name,
                         autheticated_userid: row.user_id,
-                        autheticated_email: email
                     }
                 );
             }

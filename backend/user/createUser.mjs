@@ -45,7 +45,7 @@ export function createUser(req, res) {
 
 
         return res.status(200).json({
-          mig: "success create user",
+          msg: "success create user",
           token: token,
         });
       }
