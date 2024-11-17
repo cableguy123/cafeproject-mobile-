@@ -9,8 +9,8 @@ const pbkdf2Promis = util.promisify(crypto.pbkdf2);
 
 export function getUser(req, res) {
     const { email, password } = req.body;
-    console.log(`getUserの${email}`);
-    console.log(`getUserの${password}`);
+    // console.log(`getUserの${email}`);
+    // console.log(`getUserの${password}`);
 
     db.get('SELECT user_id,name,salt,password FROM users WHERE email = ?', [email], async (err, row) => {
         if (!row) {
@@ -36,8 +36,9 @@ export function getUser(req, res) {
             } else {
                 res.status(200).json(
                     {
-                        autheticated_user: row.user_id,
-                        autheticated_userid: row.name,
+                        // row.name
+                        autheticated_user: row.name,
+                        autheticated_userid: row.user_id,
                         autheticated_email: email
                     }
                 );
