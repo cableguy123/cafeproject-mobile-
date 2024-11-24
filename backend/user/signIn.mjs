@@ -9,6 +9,7 @@ const pbkdf2Promis = util.promisify(crypto.pbkdf2);
 
 export function getUser(req, res) {
     const { user_id, email, password } = req.body;
+    const role = req.body.role;
 
     // console.log(`getUserの${user_id}`);
     // console.log(`getUserの${email}`);
@@ -42,6 +43,7 @@ export function getUser(req, res) {
                         msg: "success login user",
                         autheticated_user: row.name,
                         autheticated_userid: row.user_id,
+                        role: role
                     }
                 );
             }
