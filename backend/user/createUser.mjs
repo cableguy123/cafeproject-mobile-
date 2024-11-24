@@ -39,7 +39,6 @@ export function createUser(req, res) {
         const payload = {
           user_id: user_id,
           email: email,
-          role: "user"
         };
 
         const token = JWT.sign(payload, jwt.secret, jwt.options);
@@ -47,7 +46,7 @@ export function createUser(req, res) {
 
         return res.status(200).json({
           msg: "success create user",
-          token: token,
+          token: token
         });
       }
     }
