@@ -4,7 +4,7 @@ import { getUser } from '../user/signIn.mjs';
 import { getIdbyEmailandPassword, deleteUser } from '../user/deleteUser.mjs';
 import { checkAuth } from '../middleware/checkAuth.mjs';
 
-
+// AppRouterのpathに合わせる(メモ)
 const router = express.Router();
 
 router.post('/signUp', function (req, res) {

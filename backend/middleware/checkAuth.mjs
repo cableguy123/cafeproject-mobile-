@@ -17,6 +17,7 @@ export function checkAuth(req, res, next) {
         // console.log(authUser);
         req.body.user_id = authUser.user_id;
         req.body.email = authUser.email;
+        req.body.role = authUser.role;
 
         next();
     } catch (error) {
