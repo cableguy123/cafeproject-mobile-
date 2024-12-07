@@ -6,15 +6,15 @@ part 'qrcode.g.dart';
 
 @JsonSerializable()
 class QrCode {
-  late int? qrcodeId;
+  int qrcodeId;
   String code;
   String expirationCode;
-  late DateTime? createdAt;
+  DateTime createdAt;
   QrCode({
-    this.qrcodeId,
+    required this.qrcodeId,
     required this.code,
     required this.expirationCode,
-    this.createdAt
+    required this.createdAt
   });
   factory QrCode.fromJson(Map<String,dynamic> json) => _$QrCodeFromJson(json); // return QrCode
   Map<String,dynamic> toJson() => _$QrCodeToJson(this); // return json data in QrCode

@@ -42,10 +42,3 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-
-
-# for hash .g.dart file 
-/lib/controller/provider
-/lib/controller/router 
-/lib/model/db_model/*.g.dart
-
