@@ -31,10 +31,6 @@ migrate_working_dir/
 .pub/
 /build/
 
-# backend/ related
-node_modules
-.env
-
 # Symbolication related
 app.*.symbols
 
@@ -45,11 +41,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-
-
-# for hash .g.dart file 
-/lib/controller/provider
-/lib/controller/router 
-/lib/model/db_model/*.g.dart
 

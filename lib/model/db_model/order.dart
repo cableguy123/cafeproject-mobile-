@@ -6,19 +6,19 @@ part 'order.g.dart';
 
 @JsonSerializable()
 class Order {
-  late int? orderId;
+  int orderId;
   int userId;
   String paymentMethod;
   int amount;
   String paymentStatus;
-  late DateTime? createAt;
+  DateTime createAt;
   Order({
-    this.orderId,
+    required this.orderId,
     required this.userId,
     required this.paymentMethod,
     required this.amount,
     required this.paymentStatus,
-    this.createAt
+    required this.createAt
   });
   factory Order.fromJson(Map<String,dynamic> json) => _$OrderFromJson(json);
   Map<String,dynamic> toJson() => _$OrderToJson(this);

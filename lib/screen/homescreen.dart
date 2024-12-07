@@ -1,8 +1,11 @@
-import 'package:cafeproject/screen/login/loginscreen.dart';
-import 'package:cafeproject/screen/settingscreen.dart';
-import 'package:cafeproject/screen/signup/createuser.dart';
+import 'package:cafeproject/model/db_model/user.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../design/fontColors/ProjectColors.dart';
+
+const Map<int,String> naviIndexEndpoint = {
+  0: '/home',
+};
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,9 +17,10 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      appBar: const HomeAppBar(),
+    return const Scaffold(
+      appBar: HomeAppBar(),
       body: HomeContainer(),
+      bottomNavigationBar: BottomNaviWidget(),
     );
   }
   @override
@@ -26,44 +30,34 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
 
 
 // TODO: This is AppBar
-class HomeAppBar extends StatelessWidget  implements PreferredSizeWidget {
+class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
+  // TODO: NavigatorPush
+  void _navigationToAlarm(BuildContext context) {
+    GoRouter.of(context).go('/home/alarm');
+  }
+  void _navigateToSettings(BuildContext context) {
+    GoRouter.of(context).go('/home/settings');
+  }
+  void _navigationToProfile(BuildContext context) {
+    GoRouter.of(context).go('/home/login');
+  }
   @override
   Widget build(BuildContext context) {
     return AppBar(
       leading: Builder(
         builder: (BuildContext context) {
-          return IconWidgetButton(iconsValue: Icons.account_circle,tooltipValue: 'account',iconPressed: _navigateToSettings);
+          return IconWidgetButton(iconsValue: Icons.account_circle,tooltipValue: 'account',iconPressed: _navigationToProfile);
         },
       ),
       actions: <Widget>[
-        IconWidgetButton(iconsValue: Icons.notifications, tooltipValue: 'alarm', iconPressed: _navigateToSettings),
+        IconWidgetButton(iconsValue: Icons.notifications, tooltipValue: 'alarm', iconPressed: _navigationToAlarm),
         IconWidgetButton(iconsValue: Icons.settings, tooltipValue: 'settings', iconPressed: _navigateToSettings),
-      ],
+      ]
     );
   }
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-  // TODO: NavigatorPush
-  void _navigateToSettings(BuildContext context) {
-    Navigator.of(context).push(_createRoute());
-  }
-  // TODO: PageMoveAnimation
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => const SettingScreen(),
-      transitionsBuilder: (context,animation,secondaryAnimation,child) {
-        const begin = Offset(1.0,0.0);
-        const end = Offset.zero;
-        const curve = Curves.ease;
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
-    );
-  }
 }
 class HomeContainer extends StatefulWidget {
   const HomeContainer({super.key});
@@ -72,8 +66,11 @@ class HomeContainer extends StatefulWidget {
 }
 class _HomeContainerState extends State<HomeContainer> {
   DateTime nowTime = DateTime.now();
-  final String newItem = "今週안녕新商品";
-  final String saleItem = "今週割引商品";
+  final Text _loginText = const Text("ログイン");
+  final Text _createUserText = const Text("新規会員登録");
+  final String _newItem = "今週新商品";
+  final String _saleItem = "今週割引商品";
+  
   String message(DateTime currentTime) {
     final now = currentTime.hour;
     final minutes = currentTime.minute;
@@ -85,22 +82,7 @@ class _HomeContainerState extends State<HomeContainer> {
       return("こんばんは");
     }
   }
-  void _onPressedLogin(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-        )
-    );
-  }
-  void _onPressedSignUp(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => createUserScreen(),
-      )
-    );
-  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -111,9 +93,9 @@ class _HomeContainerState extends State<HomeContainer> {
           children: [
             Text(message(nowTime),style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
             const SizedBox(height: 10),
-            TextWidget(height: 10, text: newItem),
+            TextWidget(height: 10, text: _newItem),
             const Divider(height: 10),
-            TextWidget(height: 140, text: saleItem),
+            TextWidget(height: 140, text: _saleItem),
             const Divider(height: 20),
             Expanded(
               child: Align(
@@ -124,8 +106,8 @@ class _HomeContainerState extends State<HomeContainer> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      ButtonWidget(onPressed: _onPressedLogin,color: Projectcolors.kPrimaryBlackColor,fontColor: Projectcolors.kPrimaryWhiteColor, child: const Text("ログイン")),
-                      ButtonWidget(onPressed: _onPressedSignUp,color: Projectcolors.kPrimaryBlackColor,fontColor: Projectcolors.kPrimaryWhiteColor,child: const Text("新規会員登録"),),
+                      ButtonWidget(pressedFunc: () => context.go('/login'), color: Projectcolors.kPrimaryBlackColor, fontColor: Projectcolors.kPrimaryWhiteColor, child: _loginText),
+                      ButtonWidget(pressedFunc: () => context.go('/create'), color: Projectcolors.kPrimaryBlackColor, fontColor: Projectcolors.kPrimaryWhiteColor, child: _createUserText),
                     ],
                   ),
                 ),
@@ -137,6 +119,50 @@ class _HomeContainerState extends State<HomeContainer> {
     );
   }
 }
+
+// TODO: This is BottomNavigationBar
+class BottomNaviWidget extends StatefulWidget {
+  const BottomNaviWidget({super.key});
+  @override
+  State<BottomNaviWidget> createState() => _BottomNaviWidgetState();
+}
+
+class _BottomNaviWidgetState extends State<BottomNaviWidget> with SingleTickerProviderStateMixin {
+  int _currentIndex = 0;
+  late TabController _tabController;
+  // 初期状態
+  @override
+  void initState() {
+    super.initState();
+    // 初期状態 TabBar
+    _tabController = TabController(length: 5, vsync: this);
+    _tabController.addListener(_tabListener);
+  }
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+  void _tabListener() {
+    setState(() {
+      _currentIndex = _tabController.length;
+    });
+  }
+  void onTapBottomNavigation(int idx) {
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: _currentIndex ?? 0,
+      selectedFontSize: 10.0,
+      unselectedFontSize: 10.0,
+      type: BottomNavigationBarType.fixed, items: [],
+    );
+  }
+}
+
 // TODO: IconWidgetButton
 class IconWidgetButton extends StatelessWidget {
   final IconData iconsValue;
@@ -170,13 +196,17 @@ class TextWidget extends StatelessWidget {
 // TODO: Login,SignUp ButtonWidget
 class ButtonWidget extends StatelessWidget {
   final Widget child;
-  final void Function(BuildContext) onPressed;
+  final void Function() pressedFunc;
   final Color color;
   final Color fontColor;
-  const ButtonWidget({super.key,required this.child,required this.onPressed,required this.color,required this.fontColor});
+  const ButtonWidget({super.key,required this.pressedFunc,required this.color,required this.fontColor,required this.child});
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: () => onPressed(context),style:ElevatedButton.styleFrom(backgroundColor: color,foregroundColor: fontColor), child: child);
+    return ElevatedButton(
+      onPressed: pressedFunc,
+      style:ElevatedButton.styleFrom(backgroundColor: color,foregroundColor: fontColor),
+      child: child,
+    );
   }
 }
 

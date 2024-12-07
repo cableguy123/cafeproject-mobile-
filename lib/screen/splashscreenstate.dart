@@ -1,5 +1,5 @@
-import 'package:cafeproject/screen/router/navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -7,24 +7,39 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+  bool isAnimationFinished = false;
+  late AnimationController _controller = AnimationController(
+    vsync: this,
+  );
   @override
   void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 5), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const MyApp(),
-        ),
-      );
-    });
+    super.initState(); // 初期状態
+    _controller = AnimationController(vsync: this); // 初期状態アニメ効果追加
+  }
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Lottie.asset('assets/anime.json'),
+        // イメージロード
+        child: Lottie.asset(
+            'assets/anime.json',
+          onLoaded: (composition) {
+            Future.delayed(composition.duration, () {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                if (mounted == true) {
+                  context.go('/home');
+                }
+              });
+            });
+          }
+        ),
       ),
     );
   }

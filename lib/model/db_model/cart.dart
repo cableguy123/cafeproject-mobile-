@@ -6,12 +6,12 @@ part 'cart.g.dart';
 
 @JsonSerializable()
 class Cart {
-  late int? id;
+  int id;
   String productName;
   String productCode;
   int productPrice;
   Cart({
-    this.id,
+    required this.id,
     required this.productName,
     required this.productCode,
     required this.productPrice
